@@ -26,7 +26,6 @@ func bigSync() {
 	newIndex := make(chan float64, 1000)
 	newDatum := make(chan datum, 100)
 	streamData := make(chan types.Value, 100)
-	// newMap := types.NewStreamingMap(types.NewTestValueStore(), streamData)
 
 	go func() {
 		for i := 8432709.0; i < 8432712.0; i++ {
@@ -46,14 +45,6 @@ func bigSync() {
 		streamData <- datum.value
 	}
 	close(streamData)
-/*
-	fmt.Println("generating map...")
-	mm := <-newMap
-	return types.NewStruct("HackerNoms", types.StructData{
-		"items": mm,
-		"top":   types.NewList(types.Number(0)),
-	})
-*/
 }
 
 func workerPool(count int, work func(), done func()) {
