@@ -9,9 +9,8 @@ import (
 	"time"
 
 	"github.com/attic-labs/noms/go/types"
-	"github.com/stormasm/firego"
-	//"github.com/stormasm/hackerelastic1/elastic"
-	"github.com/stormasm/elastichacker/redisc"
+	"github.com/stormasm/redishacker/firego"
+	"github.com/stormasm/redishacker/redisc"
 )
 
 type datum struct {
