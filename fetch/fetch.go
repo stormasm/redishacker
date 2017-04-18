@@ -7,14 +7,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/attic-labs/noms/go/types"
 	"github.com/stormasm/redishacker/firego"
 	"github.com/stormasm/redishacker/redisc"
 )
 
 type datum struct {
 	index float64
-	value types.Struct
 }
 
 func main() {
