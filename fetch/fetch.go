@@ -36,7 +36,7 @@ func bigSync() {
 	}()
 
 	workerPool(500, func() {
-		churn(newIndex, newDatum)
+		churn(newIndex)
 	}, func() {
 		close(newDatum)
 	})
@@ -90,7 +90,7 @@ func makeClient() *http.Client {
 	return client
 }
 
-func churn(newIndex <-chan float64, newData chan<- datum) {
+func churn(newIndex <-chan float64) {
 	client := makeClient()
 
 	for index := range newIndex {
