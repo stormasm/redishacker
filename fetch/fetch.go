@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	//"reflect"
 	"time"
 
 	"github.com/attic-labs/noms/go/types"
@@ -25,7 +24,7 @@ func main() {
 func bigSync() {
 	newIndex := make(chan float64, 1000)
 	newDatum := make(chan datum, 100)
-	streamData := make(chan types.Value, 100)
+	streamData := make(chan float64, 100)
 
 	go func() {
 		for i := 8432709.0; i < 8432712.0; i++ {
@@ -41,8 +40,8 @@ func bigSync() {
 	})
 
 	for datum := range newDatum {
-		streamData <- types.Number(datum.index)
-		streamData <- datum.value
+		streamData <- datum.index
+		// streamData <- datum.value
 	}
 	close(streamData)
 }
