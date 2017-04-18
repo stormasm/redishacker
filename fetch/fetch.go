@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	"reflect"
+	//"reflect"
 	"time"
 
 	"github.com/attic-labs/noms/go/types"
@@ -110,59 +110,23 @@ func churn(newIndex <-chan float64, newData chan<- datum) {
 		n := len(bytes)
 		var dst []byte
 		dst = make([]byte, n, n)
-		//numofbytes := copy(dst,bytes)
-		//fmt.Println("Number of bytes copied = ",numofbytes)
 		copy(dst, bytes)
-		name, data := processBytes(id, dst)
+		name := getTypeFromBytes(id, dst)
 		fmt.Println(id, name)
-		// elastic.Process_json_bytes("hackernews", name, string(id), bytes)
-		// send data to redis
-		// redisc.Process_json_test("hackernews",name,id)
 		redisc.Write_json_bytes("hackernews", name, id, bytes)
-		sendDatum(newData, name, index, data)
 	}
 }
 
-func processBytes(id int, bytes []byte) (name string, data map[string]types.Value) {
+func getTypeFromBytes(id int, bytes []byte) (hntype string) {
 	var val map[string]interface{}
 	err := json.Unmarshal(bytes, &val)
 	if err != nil {
 		fmt.Printf("json Unmarshal failed for %d %s\n", id, err)
 	}
 
-	data = make(map[string]types.Value)
-	for k, v := range val {
-		switch vv := v.(type) {
-		case string:
-			data[k] = types.String(vv)
-		case float64:
-			data[k] = types.Number(vv)
-		case bool:
-			data[k] = types.Bool(vv)
-		case []interface{}:
-			ll := types.NewList()
-			for _, elem := range vv {
-				ll = ll.Append(types.Number(elem.(float64)))
-			}
-			data[k] = ll
-		default:
-			panic(reflect.TypeOf(v))
-		}
-	}
-
-	name, ok := val["type"].(string)
+	hntype, ok := val["type"].(string)
 	if !ok {
 		fmt.Printf("no type for id %d; trying again\n", id)
 	}
-	return name, data
-}
-
-func sendDatum(newData chan<- datum, name string, id float64, data map[string]types.Value) {
-	st := types.NewStruct(name, data)
-	d := datum{
-		index: id,
-		value: st,
-	}
-
-	newData <- d
+	return hntype
 }

@@ -1,3 +1,12 @@
+
+## Hacker News Api
+
+https://github.com/HackerNews/API
+
+## Example Hn Json Ids
+
+https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty
+
 ## Fetch
 
 **Fetch** pulls the data out of Hacker News and writes it to Redis.
@@ -41,4 +50,4 @@ the internet is INFINITELY slower than reading data from Redis.
 And it also decouples these processes which can actually run
 simultaneously anyway.  Having Redis sitting there as a cache
 is what it does really well anyway and Redis always acts as
-a really nice interface anyway. 
+a really nice interface anyway.
