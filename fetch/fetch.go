@@ -41,7 +41,6 @@ func bigSync() {
 
 	for datum := range newDatum {
 		streamData <- datum.index
-		// streamData <- datum.value
 	}
 	close(streamData)
 }
