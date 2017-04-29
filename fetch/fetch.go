@@ -25,7 +25,7 @@ func bigSync() {
 	streamData := make(chan float64, 100)
 
 	go func() {
-		for i := 8432709.0; i < 8432712.0; i++ {
+		for i := 8432709.0; i < 8432722.0; i++ {
 			newIndex <- i
 		}
 		close(newIndex)
