@@ -1,4 +1,12 @@
 
+Assuming you do not have a go.mod in your repository
+At the top level of this repo type these 2 commands
+
+```
+go mod init github.com/stormasm/redishacker
+go build -o myfetch ./fetch/.
+```
+
 ## Hacker News Api
 
 https://github.com/HackerNews/API
