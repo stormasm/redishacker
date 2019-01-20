@@ -1,9 +1,17 @@
 
-Assuming you do not have a go.mod in your repository
+Assuming you do not have a go.mod in your repository  
 At the top level of this repo type these 2 commands
 
 ```
 go mod init github.com/stormasm/redishacker
+```
+
+```
+cd fetch
+go run fetch.go
+
+or
+
 go build -o myfetch ./fetch/.
 ```
 
