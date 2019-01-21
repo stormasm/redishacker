@@ -27,22 +27,25 @@ func Write_json_bytes(index, itype string, id int, byteArray []byte) error {
 	c := getRedisConn()
 	defer c.Close()
 
-	// Write the byteArray using the elastic type as the key
+	// Write the JSON byteArray using the elastic index type as the key
 	// and the hackernews id as the field
 
+	// For now itype = {story, comment}
 	_, err := c.Do("HSET", itype, id, byteArray)
 
-	// Encode and write the struct as GOB data to redis as well...
-
-	nbytearray := encode_struct_tobytes(itype, id, byteArray)
-	hashString := hash.Of(nbytearray).String()
-	_, err = c.Do("HSET", index, id, nbytearray)
+	// For now indexhash and indexset equals
+	// {hackernewshash, hackernewsset}
 
 	strary := []string{index, "hash"}
 	indexhash := strings.Join(strary, "")
 	strary = []string{index, "set"}
 	indexset := strings.Join(strary, "")
 
+	// Encode and write the struct as GOB data to redis as well...
+
+	nbytearray := encode_struct_tobytes(itype, id, byteArray)
+	hashString := hash.Of(nbytearray).String()
+	_, err = c.Do("HSET", index, id, nbytearray)
 	_, err = c.Do("HSET", indexhash, id, hashString)
 	_, err = c.Do("SADD", indexset, id)
 
