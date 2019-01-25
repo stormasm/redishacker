@@ -19,6 +19,8 @@ func Sscan(key string, newData chan<- float64) error {
 	c := getRedisConn()
 	defer c.Close()
 
+	fmt.Println("Processing Redis Set Key", key)
+
 	for {
 		values, err := redis.Values(c.Do("SSCAN", key, cursor))
 
@@ -33,7 +35,7 @@ func Sscan(key string, newData chan<- float64) error {
 
 		for num, item := range items {
 			// Grab the ID
-			fmt.Println(num);
+			fmt.Println(num, item);
 			myid = item
 			f, err := strconv.ParseFloat(myid, 64)
 			if err != nil {
@@ -47,6 +49,6 @@ func Sscan(key string, newData chan<- float64) error {
 			break
 		}
 	}
-	fmt.Println(" total = ", total)
+	fmt.Println("Total = ", total)
 	return nil
 }

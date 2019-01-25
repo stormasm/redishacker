@@ -6,5 +6,5 @@ import (
 
 func TestSscan(t *testing.T) {
 	newId := make(chan float64, 100)
-	Sscan("favoritesettest", newId)
+	Sscan("favoritetestset", newId)
 }
