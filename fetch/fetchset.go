@@ -25,13 +25,11 @@ func bigSync() {
 	streamData := make(chan float64, 100)
 
 	go func() {
-
-/*  For Loop Code
+/*  Leave here for testing purposes for now...
 		for i := 8432709.0; i < 8432722.0; i++ {
 			newIndex <- i
 		}
 */
-
 		redisc.Sscan("favoritetestset", newIndex)
 		close(newIndex)
 	}()
