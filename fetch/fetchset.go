@@ -32,7 +32,7 @@ func bigSync() {
 		}
 */
 
-		go redisc.Sscan("favoritetestset", newIndex)
+		redisc.Sscan("favoritetestset", newIndex)
 		close(newIndex)
 	}()
 
