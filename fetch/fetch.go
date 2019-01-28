@@ -25,16 +25,16 @@ func bigSync() {
 	streamData := make(chan float64, 100)
 
 	go func() {
-/*  Leave here for testing purposes for now...
-		for i := 8432709.0; i < 8432722.0; i++ {
+//  Leave here for testing purposes for now...
+//	for i := 18987999.0; i < 19012872.0; i++ {
+		for i := 18890000.0; i < 18892000.0; i++ {
 			newIndex <- i
 		}
-*/
-		redisc.Sscan("favoritetestset", newIndex)
+//	redisc.Sscan("favoritetestset", newIndex)
 		close(newIndex)
 	}()
 
-	workerPool(500, func() {
+	workerPool(50, func() {
 		churn(newIndex)
 	}, func() {
 		close(newDatum)
